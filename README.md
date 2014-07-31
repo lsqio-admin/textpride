@@ -10,6 +10,7 @@ textpride
   ```
   <uses-permission android:name="android.permission.INTERNET" />
   ```
+
 2. Create an activity (TextprideWebViewActivtity.class)
   - Activity Title String (strings.xml) (can use cusomt title what app provider desires):
   ```
@@ -32,4 +33,21 @@ textpride
     </activity>
   </application>
   ```
+
+3. Create a layout (named: “textpride_webview_activty”);
+  - Add the WebView to the activity layout
+  ```
+  <WebView  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/webview"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+  />
+  ```
+
+4. Add the layout (created above) to the onCreate() method of the activity:<br>
+  setContentView(R.layout.textpride_webview_activty);
+
+5. Get the Url that will be provided by the intent object when activity is started (below):
+
+
 ===========
