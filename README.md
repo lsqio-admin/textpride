@@ -89,5 +89,45 @@ textpride
   webview.postUrl(url,EncodingUtils.getBytes(postData, “BASE64”));
   ```
 ===========
+
 #### Setting up Content to Unlock Screen
+1. Generate Stickers (However the app provider chooses);
+
+2. Create fields for intent to send parameters to the new activity
+  ```
+  public static String TEXTPRIDE_URL = “{package name}.TEXTPRIDEURL”;
+	public static String CONTENT_ID = “{package name}.CONTENTID”;
+	public static String USER_ID = “{package name}.USERID”;
+
+  ```
+3. Attach textpride Url to stickers
+4. If stickers have text pride Url, add/show unlock button as seem fit
+  - button must run a method, ex: `textprideViewContent(View view);`
+    - therefor onclick of unlock button, run textprideViewContent(View view); 
+  - method definition:
+  ```
+  textprideViewContent(View view){
+    String textprideUrl = {url from client for webview, attached to the sticker};
+    String stickerId = { the id of the sticker clicked on}
+    String userId = {id of the user in the app}
+    int code = 404;
+    HttpURLConnection connection = null;
+    try{         
+        URL myurl = new URL(textprideUrl);        
+        connection = (HttpURLConnection) myurl.openConnection();     
+        connection.setRequestMethod("HEAD");         
+        code = connection.getResponseCode();        
+        System.out.println("" + code); 
+    } catch {
+    //Handle invalid URL
+    }
+    
+    // if code = 200 (not 404 or 500)
+    Intent viewTextPrideContent = new Intent(this, textprideWebViewActivtity.class);
+    viewTextPrideContent.putExtra(TEXTPRIDE_URL, textprideUrl);
+    viewTextPrideContent.putExtra(CONTENT_ID, stickerId);
+    viewTextPrideContent.putExtra(USER_ID, userId);
+    startActivity(viewTextPrideContent);
+  }
+  ```
 
