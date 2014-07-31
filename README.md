@@ -161,8 +161,7 @@ textpride
   ```
   NSURL *url = [NSURL URLWithString: @textprideUrl];
   NSString *body = [NSString stringWithFormat: @"appName=%@&contentId=%@&userId=%@&callback=%@",
-  	@"{app providers name}",@contentId, @userId, @"{true|false}"
-  @"arg1=%@&arg2=%@", @“val1",@"val2"];
+  	@"{app providers name}",@contentId, @userId, @"{true|false}";
 
   NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL: url];
 
