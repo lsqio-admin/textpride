@@ -180,3 +180,4 @@ textpride
   - Upon value change to true, make a request to the same textprideUrl
     - With params: `userId and confirm="true"`
     - look for response value: confirmed = `"true"|"false"`
+    - if reponse is true, unlock content
