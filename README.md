@@ -139,8 +139,11 @@ textpride
 ### Some iOS (Similar to Android)
 
 1. Create UIWebView object in the window (not inside scrollview)
+
 2. Enable caching and other required settings
+
 3. Scale to fit page (scalePageToFit = true)
+ 
 4. Overload Url Request, to check for url change for the callback (ex: to unlock content)
   ```
   - (BOOL)webView:(UIWebView *)webView 
@@ -153,6 +156,7 @@ textpride
   }
 
   ```
+  
 5. On sticker (with textprideUrl) click Load uiwebview with post data 
   ```
   NSURL *url = [NSURL URLWithString: @textprideUrl];
@@ -168,3 +172,11 @@ textpride
 
   [webView loadRequest: request];
   ```
+=============
+
+##### Alternatively 
+- To check if content is unlocked, you can watch for a value change to see if event is unlocked
+  - valueName = textprideContentUnlocked = false -> true;
+  - Upon value change to true, make a request to the same textprideUrl
+    - With params: `userId and confirm="true"`
+    - look for response value: confirmed = `"true"|"false"`
