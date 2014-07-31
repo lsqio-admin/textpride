@@ -135,16 +135,17 @@ textpride
   }
   ```
 ---------------
+
 ### Some iOS (Similar to Android)
 
 1. Create UIWebView object in the window (not inside scrollview)
-2. Enable caching 
-3. scale to fit page (scalePageToFit = true)
-4. overload Url Request
+2. Enable caching and other required settings
+3. Scale to fit page (scalePageToFit = true)
+4. Overload Url Request, to check for url change for the callback (ex: to unlock content)
   ```
   - (BOOL)webView:(UIWebView *)webView 
       shouldStartLoadWithRequest:(NSURLRequest *)request 
-      navigationType:(UIWebViewNavigationType)navigationType{
+      navigationType:(UIWebViewNavigationType)navigationType {
 
     NSLog(@"%@",[[request URL] query]);
 
@@ -152,7 +153,7 @@ textpride
   }
 
   ```
-5. post data 
+5. On sticker (with textprideUrl) click Load uiwebview with post data 
   ```
   NSURL *url = [NSURL URLWithString: @textprideUrl];
   NSString *body = [NSString stringWithFormat: @"appName=%@&contentId=%@&userId=%@&callback=%@",
