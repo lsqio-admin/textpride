@@ -181,3 +181,15 @@ textpride
     - With params: `userId and confirm="true"`
     - look for response value: confirmed = `"true"|"false"`
     - if reponse is true, unlock content
+
+-----------------
+=================
+-----------------
+
+     | End User | Client | Text Pride | App Partners
+-----| -------- | ------ | ---------- | ------------
+Client Signup | | | Textpride uses the admin panel to setup the Client | 
+Creating a Campaign | | The client creates  a new story or campaign. | Textpride uses the information/settings entered by the client and sets up a unique URL | 
+The Stickers | | The client provides the generated unique URL to the app partner for the stickers (or other in app content) | | app partners integrate the stickers with a clickable link
+The Call | The end user wants to download the sticker, if told to unlock, they must complete the campaign event. User clicks to continue, buy or cancel | | the generated url is used by text pride to confirm the campaign and link is active. the confirmation returns event details for the in-app browser experience to the app | the app hits the link information to confirm link is active and use the returning info to start the browser and generate the content
+The Callback | The User is provided with share, unlock sticker, close buttons. | | - share allows them to share the link to the campaign (in and out of app) <br> - unlock sticker provides a callback function back in the app to unlock the sticker <br> - close just cancels the event, nothing is delegated except closing the browser. event must be completed again | - app must allow in-app link sharing to other users <br> - app must integrate callback javascript interface function to complete the event and unlock the feature <br> - callback to close the browser
