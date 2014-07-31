@@ -1,7 +1,6 @@
 textpride
 =========
-
-------------
+------------------
 ### Android
 
 #### Setting up Webview
@@ -69,6 +68,11 @@ textpride
 
   ```
   - Setup page redirect for callback (** this is where app provider content unlock function goes):
+    - this is where the page redirect is checked to see if the URL tells the app to unlock the current
+    	- if so run app-providers content unlock function
+    	- stop further page loading
+    	- close webivew if required
+    	- else wait for user to close webview
   ```
   textprideWebView.setWebViewClient(new WebViewClient() {  
     @Override  
@@ -82,10 +86,10 @@ textpride
   }  
   ```
 
-7. load the Url (with params for post):
+7. load the Url (with params for post), some params taken from intent (above):
   ```
   String url = textprideUrl;
-  String postData = “appName=“{ }”&contentId=contentId&userId=userId;
+  String postData = “appName={app providers name}&contentId=contentId&userId=userId&callback={true/false}";
   webview.postUrl(url,EncodingUtils.getBytes(postData, “BASE64”));
   ```
 ===========
@@ -96,8 +100,8 @@ textpride
 2. Create fields for intent to send parameters to the new activity
   ```
   public static String TEXTPRIDE_URL = “{package name}.TEXTPRIDEURL”;
-	public static String CONTENT_ID = “{package name}.CONTENTID”;
-	public static String USER_ID = “{package name}.USERID”;
+  public static String CONTENT_ID = “{package name}.CONTENTID”;
+  public static String USER_ID = “{package name}.USERID”;
 
   ```
 3. Attach textpride Url to stickers
@@ -130,4 +134,36 @@ textpride
     startActivity(viewTextPrideContent);
   }
   ```
+---------------
+### Some iOS (Similar to Android)
 
+1. Create UIWebView object in the window (not inside scrollview)
+2. Enable caching 
+3. scale to fit page (scalePageToFit = true)
+4. overload Url Request
+  ```
+  - (BOOL)webView:(UIWebView *)webView 
+      shouldStartLoadWithRequest:(NSURLRequest *)request 
+      navigationType:(UIWebViewNavigationType)navigationType{
+
+    NSLog(@"%@",[[request URL] query]);
+
+    return NO;
+  }
+
+  ```
+5. post data 
+  ```
+  NSURL *url = [NSURL URLWithString: @textprideUrl];
+  NSString *body = [NSString stringWithFormat: @"appName=%@&contentId=%@&userId=%@&callback=%@",
+  	@"{app providers name}",@contentId, @userId, @"{true|false}"
+  @"arg1=%@&arg2=%@", @“val1",@"val2"];
+
+  NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL: url];
+
+  [request setHTTPMethod: @“POST"];
+
+  [request setHTTPBody: [body dataUsingEncoding: NSUTF8StringEncoding]];
+
+  [webView loadRequest: request];
+  ```
