@@ -181,9 +181,19 @@ SwyftMedia
     - look for response value: confirmed = `"true"|"false"`
     - if reponse is true, unlock content
 
-- Or html5 can watch for a custom trigger using jQuery
-  - trigger name: "swyftmediaUnlockHtml5"
+- Or html5 can watch for a custom trigger to go off using jQuery
   - and call a function on that using jQuery
+  ```
+  $(swyftmedia).bind("swyftmediaUnlockHtml5", function(){
+    html5 js unlock functions by app
+  });
+  ```
+  - on the trigger name: "swyftmediaUnlockHtml5"
+  ```
+  var swyftmedia = {};
+  $(swyftmedia).trigger("swyftmediaUnlockHtml5", { time: eventCompleteTime,  });
+  ```
+  
 -----------------
 =================
 -----------------
