@@ -174,25 +174,17 @@ SwyftMedia
 =============
 
 ##### Alternatively 
-- To check if content is unlocked, you can watch for a value change to see if event is unlocked
-  - valueName = swyftmediaContentUnlocked = false -> true;
-  - Upon value change to true, make a request to the same swyftmediaUrl
-    - With params: `userId and confirm="true"`
-    - look for response value: confirmed = `"true"|"false"`
-    - if reponse is true, unlock content
+- To check if content is unlocked, you can watch for a value change in function unlock or hijack it
+  - function = swyftmedia.unlock = false -> true;
+  - the function will call automaticly when the the value changes
+  - allowing you to overwrite the function and making logic based on your needs.
 
-- Or html5 can watch for a custom trigger to go off using jQuery
-  - and call a function on that using jQuery
+- Or html5 call a function on that using 
   ```
-  $(swyftmedia).bind("swyftmediaUnlockHtml5", function(){
-    html5 js unlock functions by app
-  });
-  ```
-  - on the trigger name: "swyftmediaUnlockHtml5"
-  ```
-  var swyftmedia = {};
-  $(swyftmedia).trigger("swyftmediaUnlockHtml5", { time: eventCompleteTime,  });
-  ```
+  window.swyftmedia.unlock = function(){
+   // js unlock functions by app
+  };
+  ````
   
 -----------------
 =================
