@@ -52,7 +52,7 @@ textpride
   ```
   Intent intent = getIntent();
   String textprideUrl = intent.getStringExtra({ParentMainActivity}.TEXTPRIDE_URL);
-  //ex: “ad.textpride.com/refId/urlId”
+  //ex: "ads.swyftmedia.com/ad/:appName/:contentId/[:userid]?callback=true"
   String contentId = intent.getStringExtra({ParentMainActivity}.CONTENTID);
   String userId = intent.getStringExtra({ParentMainActivity}.USERID);
   ```
