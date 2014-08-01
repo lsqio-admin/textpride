@@ -1,4 +1,4 @@
-textpride
+SwyftMedia
 =========
 ------------------
 ### Android
@@ -10,12 +10,12 @@ textpride
   <uses-permission android:name="android.permission.INTERNET" />
   ```
 
-2. Create an activity (TextprideWebViewActivtity.class)
+2. Create an activity (SwyftmediaWebViewActivtity.class)
   - Activity Title String (strings.xml) (can use cusomt title what app provider desires):
   ```
   <resources>
       ...
-      <string name=“textpride_webview_activity”>Textpride Content</string>
+      <string name=“swyftmedia_webview_activity”>SwyftMedia Content</string>
   </resources>
   ```
   - Declare it in the manifest
@@ -23,17 +23,17 @@ textpride
   <application ... >
     ...
     <activity
-        android:name= {package}.”TextprideWebViewActivtity”
-        android:label="@string/textpride_webview_activity"
+        android:name= {package}.”SwyftmediaWebViewActivtity”
+        android:label="@string/swyftmedia_webview_activity"
             android:parentActivityName=“{parent activity name}” >
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value="com.example.myfirstapp.MainActivity" />
+            android:value="{package name}.{activity name}" />
     </activity>
   </application>
   ```
 
-3. Create a layout (named: “textpride_webview_activty”);
+3. Create a layout (named: “swyftmedia_webview_activty”);
   - Add the WebView to the activity layout
   ```
   <WebView  xmlns:android="http://schemas.android.com/apk/res/android"
@@ -45,13 +45,13 @@ textpride
 
 4. Add the layout (created above) to the onCreate() method of the activity:<br>
   ```
-  setContentView(R.layout.textpride_webview_activty);
+  setContentView(R.layout.swyftmedia_webview_activty);
   ```
 
 5. Get the Url that will be provided by the intent object when activity is started (below):
   ```
   Intent intent = getIntent();
-  String textprideUrl = intent.getStringExtra({ParentMainActivity}.TEXTPRIDE_URL);
+  String swyftmediaprideUrl = intent.getStringExtra({ParentMainActivity}.SWYFTMEDIA_URL);
   //ex: "ads.swyftmedia.com/ad/:appName/:contentId/[:userid]?callback=true"
   String contentId = intent.getStringExtra({ParentMainActivity}.CONTENTID);
   String userId = intent.getStringExtra({ParentMainActivity}.USERID);
@@ -59,11 +59,11 @@ textpride
 
 6. Get the WebView in the activity by id
   ```
-  WebView textprideWebView = (WebView) findViewById(R.id.webview);
+  WebView swyftmediaWebView = (WebView) findViewById(R.id.webview);
   ```
   - Setup the web view:
   ```
-  WebSettings webSettings = textprideWebView.getSettings();
+  WebSettings webSettings = swyftmediaWebView.getSettings();
   webSettings.setJavaScriptEnabled(true);
 
   ```
@@ -74,10 +74,10 @@ textpride
     	- close webivew if required
     	- else wait for user to close webview
   ```
-  textprideWebView.setWebViewClient(new WebViewClient() {  
+  swyftmediaWebView.setWebViewClient(new WebViewClient() {  
     @Override  
     public void onPageStarted(WebView view, String url, Bitmap favicon){  
-      if (url.startsWith(“textprideUnlockContent/time=number/complete=boolean")) {  
+      if (url.startsWith(“swyftmediaUnlockContent/time=number/complete=boolean")) {  
         	view.stopLoading();  
   	// in app sticker unlock function
   	// close web view
@@ -88,7 +88,7 @@ textpride
 
 7. load the Url (with params for post), some params taken from intent (above):
   ```
-  String url = textprideUrl;
+  String url = swyftmediaUrl;
   String postData = “appName={app providers name}&contentId=contentId&userId=userId&callback={true/false}";
   webview.postUrl(url,EncodingUtils.getBytes(postData, “BASE64”));
   ```
@@ -99,25 +99,25 @@ textpride
 
 2. Create fields for intent to send parameters to the new activity
   ```
-  public static String TEXTPRIDE_URL = “{package name}.TEXTPRIDEURL”;
+  public static String SWYFTMEDIA_URL = “{package name}.SWYFTMEDIAURL”;
   public static String CONTENT_ID = “{package name}.CONTENTID”;
   public static String USER_ID = “{package name}.USERID”;
 
   ```
-3. Attach textpride Url to stickers
-4. If stickers have text pride Url, add/show unlock button as seem fit
-  - button must run a method, ex: `textprideViewContent(View view);`
-    - therefor onclick of unlock button, run textprideViewContent(View view); 
+3. Attach swyftmedia Url to stickers
+4. If stickers have swyftmedia Url, add/show unlock button as seem fit
+  - button must run a method, ex: `swyftmediaViewContent(View view);`
+    - therefor onclick of unlock button, run swyftmediaViewContent(View view); 
   - method definition:
   ```
-  textprideViewContent(View view){
-    String textprideUrl = {url from client for webview, attached to the sticker};
-    String stickerId = { the id of the sticker clicked on}
-    String userId = {id of the user in the app}
+  swyftmediaViewContent(View view){
+    String swyftmediaUrl = {url from client for webview, attached to the sticker} from intent;
+    String stickerId = { the id of the sticker clicked on} from intent
+    String userId = {id of the user in the app} from intent
     int code = 404;
     HttpURLConnection connection = null;
     try{         
-        URL myurl = new URL(textprideUrl);        
+        URL myurl = new URL(swyftmediaUrl);        
         connection = (HttpURLConnection) myurl.openConnection();     
         connection.setRequestMethod("HEAD");         
         code = connection.getResponseCode();        
@@ -127,11 +127,11 @@ textpride
     }
     
     // if code = 200 (not 404 or 500)
-    Intent viewTextPrideContent = new Intent(this, textprideWebViewActivtity.class);
-    viewTextPrideContent.putExtra(TEXTPRIDE_URL, textprideUrl);
-    viewTextPrideContent.putExtra(CONTENT_ID, stickerId);
-    viewTextPrideContent.putExtra(USER_ID, userId);
-    startActivity(viewTextPrideContent);
+    Intent viewSwyftMediaContent = new Intent(this, swyftmediaWebViewActivtity.class);
+    viewSwyftMediaContent.putExtra(SYFTMEDIA_URL, swyftmediaUrl);
+    viewSwyftMediaContent.putExtra(CONTENT_ID, stickerId);
+    viewSwyftMediaContent.putExtra(USER_ID, userId);
+    startActivity(viewSwyftMediaContent);
   }
   ```
 ---------------
@@ -157,9 +157,9 @@ textpride
 
   ```
   
-5. On sticker (with textprideUrl) click Load uiwebview with post data 
+5. On sticker (with swyftmediaUrl) click Load uiwebview with post data 
   ```
-  NSURL *url = [NSURL URLWithString: @textprideUrl];
+  NSURL *url = [NSURL URLWithString: @swyftmediaUrl];
   NSString *body = [NSString stringWithFormat: @"appName=%@&contentId=%@&userId=%@&callback=%@",
   	@"{app providers name}",@contentId, @userId, @"{true|false}";
 
@@ -175,20 +175,23 @@ textpride
 
 ##### Alternatively 
 - To check if content is unlocked, you can watch for a value change to see if event is unlocked
-  - valueName = textprideContentUnlocked = false -> true;
-  - Upon value change to true, make a request to the same textprideUrl
+  - valueName = swyftmediaContentUnlocked = false -> true;
+  - Upon value change to true, make a request to the same swyftmediaUrl
     - With params: `userId and confirm="true"`
     - look for response value: confirmed = `"true"|"false"`
     - if reponse is true, unlock content
 
+- Or html5 can watch for a custom trigger using jQuery
+  - trigger name: "swyftmediaUnlockHtml5"
+  - and call a function on that using jQuery
 -----------------
 =================
 -----------------
 
-     | End User | Client | Text Pride | App Partners
+     | End User | Client | Swyftmedia | App Partners
 -----| -------- | ------ | ---------- | ------------
-Client Signup | | | Textpride uses the admin panel to setup the Client | 
-Creating a Campaign | | The client creates  a new story or campaign. | Textpride uses the information/settings entered by the client and sets up a unique URL | 
+Client Signup | | | SwyftMedia uses the admin panel to setup the Client | 
+Creating a Campaign | | The client creates  a new story or campaign. | Swyftmedia uses the information/settings entered by the client and sets up a unique URL | 
 The Stickers | | The client provides the generated unique URL to the app partner for the stickers (or other in app content) | | app partners integrate the stickers with a clickable link
-The Call | The end user wants to download the sticker, if told to unlock, they must complete the campaign event. User clicks to continue, buy or cancel | | the generated url is used by text pride to confirm the campaign and link is active. the confirmation returns event details for the in-app browser experience to the app | the app hits the link information to confirm link is active and use the returning info to start the browser and generate the content
+The Call | The end user wants to download the sticker, if told to unlock, they must complete the campaign event. User clicks to continue, buy or cancel | | the generated url is used by SwyftMedia to confirm the campaign and link is active. the confirmation returns event details for the in-app browser experience to the app | the app hits the link information to confirm link is active and use the returning info to start the browser and generate the content
 The Callback | The User is provided with share, unlock sticker, close buttons. | | - share allows them to share the link to the campaign (in and out of app) <br> - unlock sticker provides a callback function back in the app to unlock the sticker <br> - close just cancels the event, nothing is delegated except closing the browser. event must be completed again | - app must allow in-app link sharing to other users <br> - app must integrate callback javascript interface function to complete the event and unlock the feature <br> - callback to close the browser
